@@ -1,21 +1,27 @@
 //import 'package:backend/backend.dart' as backend;
 
 import 'package:shelf/shelf.dart';
-
-import 'api/blog_api.dart';
-import 'api/login_ap.dart';
+import 'apis/blog_api.dart';
+import 'apis/login_ap.dart';
 import 'infra/custom_server.dart';
+import 'infra/middleware_interception.dart';
+import 'infra/security/security_service_imp.dart';
+import 'services/noticia_service.dart';
 import 'utils/custom_env.dart';
 
 void main() async {
   CustomEnv.fromFile('.env-dev');
 
-  var cascadeHandler = Cascade()
-  .add(LoginApi().handler,)
-  .add(BlogApi().handler,)
-  .handler;
+  var cascadeHandler = 
+    Cascade()
+    .add(LoginApi(SecutityServiceImp()).handler,)
+    .add(BlogApi(NoticiaService()).handler)
+    .handler;
 
-  var handler = Pipeline().addMiddleware(logRequests()).addHandler(cascadeHandler);
+  var handler = Pipeline()
+  .addMiddleware(logRequests())
+  .addMiddleware(MiddlewareInterception().middleware)
+  .addHandler(cascadeHandler);
 
   await CustomServer().initialize(
     handler: handler,
