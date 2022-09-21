@@ -1,8 +1,10 @@
 //import 'package:backend/backend.dart' as backend;
 
+import 'dart:io';
+
 import 'package:shelf/shelf.dart';
 import 'apis/blog_api.dart';
-import 'apis/login_ap.dart';
+import 'apis/login_api.dart';
 import 'infra/custom_server.dart';
 import 'infra/middleware_interception.dart';
 import 'infra/security/security_service_imp.dart';
@@ -21,6 +23,8 @@ void main() async {
   var handler = Pipeline()
   .addMiddleware(logRequests())
   .addMiddleware(MiddlewareInterception().middleware)
+  .addMiddleware(SecutityServiceImp().authorizarion)
+  .addMiddleware(SecutityServiceImp().verifyJwt)
   .addHandler(cascadeHandler);
 
   await CustomServer().initialize(
