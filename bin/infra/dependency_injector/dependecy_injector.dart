@@ -12,7 +12,7 @@ class DependencyInjector {
   // Register : Método para registrar nossa instância
   void register<T extends Object>(
     InstanceCreator<T> instance, {
-    bool isSingleton = false,   
+    bool isSingleton = true,   
   }) =>
       _instanceMap[T] = _InstanceGenarator(instance, isSingleton);
 

@@ -4,7 +4,10 @@ import '../infra/dependency_injector/dependecy_injector.dart';
 import '../infra/security/secutity_service.dart';
 
 abstract class Api {
-  Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false});
+  Handler getHandler({
+    List<Middleware>? middlewares, 
+    bool isSecurity = false,
+  });
 
   Handler createHandler({
     required Handler router,
