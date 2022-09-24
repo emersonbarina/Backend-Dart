@@ -13,10 +13,10 @@ class Injects {
 
     di.register<SecurityService>(() => SecurityServiceImp());
 
-    di.register<LoginApi>(() => LoginApi(di.get()));
+    di.register<LoginApi>(() => LoginApi(di()));
 
     di.register<GenericService<NoticiaModel>>(() => NoticiaService());
-    di.register<BlogApi>(() => BlogApi(di.get()));
+    di.register<BlogApi>(() => BlogApi(di()));
 
     return di;
   }
