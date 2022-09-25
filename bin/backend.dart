@@ -2,7 +2,7 @@ import 'package:shelf/shelf.dart';
 import 'apis/blog_api.dart';
 import 'apis/login_api.dart';
 import 'infra/custom_server.dart';
-import 'infra/database/mysql_db_configuration.dart';
+import 'infra/database/db_configuration.dart';
 import 'infra/dependency_injector/injects.dart';
 import 'infra/middleware_interception.dart';
 import 'utils/custom_env.dart';
@@ -10,16 +10,16 @@ import 'utils/custom_env.dart';
 void main() async {
   CustomEnv.fromFile('.env-dev');
 
-  var conexao = await MySqlDBConfiguration().connection; 
-  
+  final _di = Injects.initialize();
+
+  var conexao = await _di<DBConfiguration>().connection;  
   var result = await conexao.query('SELECT * FROM usuarios;');
   print(result);
-
-  final _di = Injects.initialize();
+  
 
   var cascadeHandler = Cascade()
     .add(_di.get<LoginApi>().getHandler())
-    .add(_di.get<BlogApi>().getHandler(isSecurity: true))
+    .add(_di.get<BlogApi>().getHandler(isSecurity: false))
     .handler;
 
   var handler = Pipeline()
