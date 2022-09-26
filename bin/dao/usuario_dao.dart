@@ -9,14 +9,9 @@ class UsuarioDAO implements DAO<UsuarioModel> {
   UsuarioDAO(this._dbConfiguration);
 
   @override
-  Future delete(int id) async {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<UsuarioModel>> findAll() async {
-    final String SQL = 'SELECT * FROM usuarios';
+    final String SQL = 
+        'SELECT * FROM usuarios';
     var connection = await _dbConfiguration.connection;
     var result = await connection.query(SQL);
     List<UsuarioModel> _usuarios = [];
@@ -28,7 +23,8 @@ class UsuarioDAO implements DAO<UsuarioModel> {
 
   @override
   Future<UsuarioModel> findOne(int id) async {
-    final String SQL = 'SELECT * FROM usuarios WHERE id = ?';
+    final String SQL = 
+        'SELECT * FROM usuarios WHERE id = ?';
     var connection = await _dbConfiguration.connection;
     var result = await connection.query(SQL, [id]);
     if(result.length  <= 0) {
@@ -39,14 +35,32 @@ class UsuarioDAO implements DAO<UsuarioModel> {
 
   @override
   Future save(UsuarioModel value) async {
-    // TODO: implement save
-    throw UnimplementedError();
+    final String SQL = 
+        'INSERT INTO usuarios (nome, email, password) VALUES (?, ?, ?);';
+    var connection = await _dbConfiguration.connection;
+    var result = 
+        await connection.query(SQL, [value.name, value.email, value.password]);
+    return result.affectedRows > 0;
   }
 
   @override
   Future update(UsuarioModel value) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    final String SQL = 
+        'UPDATE usuarios set nome = ?, password = ? where id = ?;';
+    var connection = await _dbConfiguration.connection;
+    var result = 
+        await connection.query(SQL, [value.name, value.password, value.id]);
+    return result.affectedRows > 0;
+  }
+
+  @override
+  Future delete(int id) async {
+    final String SQL = 
+        'DELETE from usuarios where id = ?;';
+    var connection = await _dbConfiguration.connection;
+    var result = 
+        await connection.query(SQL, [id]);
+    return result.affectedRows > 0;
   }
   
 }
