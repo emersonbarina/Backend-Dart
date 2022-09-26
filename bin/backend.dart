@@ -6,6 +6,7 @@ import 'infra/custom_server.dart';
 import 'infra/database/db_configuration.dart';
 import 'infra/dependency_injector/injects.dart';
 import 'infra/middleware_interception.dart';
+import 'models/usuario_model.dart';
 import 'utils/custom_env.dart';
 
 void main() async {
@@ -16,9 +17,16 @@ void main() async {
   UsuarioDAO _usuarioDAO = UsuarioDAO(_di.get<DBConfiguration>());
   //print(await _usuarioDAO.findAll());
   //(await _usuarioDAO.findAll()).forEach(print);
-  print(await _usuarioDAO.findOne(5));
+  //print(await _usuarioDAO.findOne(5));
+  var usuario = UsuarioModel() // tive de criar um construtor vazio em usuario_model.dart
+    ..id = 4
+    ..name = 'Usuario Alterado'
+    ..email = 'newuser@email.com'
+    ..password = '123456';
 
-  
+  //_usuarioDAO.save(usuario).then(print);
+  //_usuarioDAO.update(usuario).then(print);
+  //_usuarioDAO.delete(4).then(print);
 
   var cascadeHandler = Cascade()
     .add(_di.get<LoginApi>().getHandler())
