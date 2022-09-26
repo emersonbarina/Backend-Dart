@@ -15,18 +15,19 @@ void main() async {
   final _di = Injects.initialize();
 
   UsuarioDAO _usuarioDAO = UsuarioDAO(_di.get<DBConfiguration>());
-  //print(await _usuarioDAO.findAll());
-  //(await _usuarioDAO.findAll()).forEach(print);
-  //print(await _usuarioDAO.findOne(5));
+
   var usuario = UsuarioModel() // tive de criar um construtor vazio em usuario_model.dart
-    ..id = 4
-    ..name = 'Usuario Alterado'
-    ..email = 'newuser@email.com'
+    ..id = 5
+    ..name = 'Novo Usuário'
+    ..email = 'novousuario@email.com'
     ..password = '123456';
 
-  //_usuarioDAO.save(usuario).then(print);
-  //_usuarioDAO.update(usuario).then(print);
-  //_usuarioDAO.delete(4).then(print);
+  _usuarioDAO.findAll().then(print); // LIST
+  _usuarioDAO.findOne(1).then(print); // OBJ 1
+  _usuarioDAO.save(usuario).then(print); // TRUE
+  usuario.name = 'Novo Usuário Alterado';  
+  _usuarioDAO.update(usuario).then(print);  //TRUE
+  _usuarioDAO.delete(5).then(print); //TRUE
 
   var cascadeHandler = Cascade()
     .add(_di.get<LoginApi>().getHandler())
