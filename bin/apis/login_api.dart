@@ -2,7 +2,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
 import '../infra/security/secutity_service.dart';
 import 'api.dart';
-
 class LoginApi extends Api{
   final SecurityService _securityService;
   LoginApi(this._securityService);
@@ -21,10 +20,10 @@ class LoginApi extends Api{
 
       return Response.ok(token);
       //return Response.ok((result != null).toString());
-    }) ;
+    });
     return createHandler(
       router: router, 
-      middlewares: middlewares
+      middlewares: middlewares,
     );
   }
 }

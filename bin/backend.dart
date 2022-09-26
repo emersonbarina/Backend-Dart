@@ -12,14 +12,14 @@ void main() async {
 
   final _di = Injects.initialize();
 
-  var conexao = await _di<DBConfiguration>().connection;  
-  var result = await conexao.query('SELECT * FROM usuarios;');
-  print(result);
+  //var conexao = await _di<DBConfiguration>().connection;  
+  //var result = await conexao.query('SELECT * FROM usuarios;');
+  //print(result);
   
 
   var cascadeHandler = Cascade()
-    .add(_di.get<LoginApi>().getHandler())
-    .add(_di.get<BlogApi>().getHandler(isSecurity: false))
+    .add(_di<BlogApi>().getHandler(isSecurity: true))
+    .add(_di<LoginApi>().getHandler())
     .handler;
 
   var handler = Pipeline()

@@ -44,7 +44,7 @@ class SecurityServiceImp implements SecurityService<JWT> {
   }
 
   @override
-  Middleware get authorizarion {
+  Middleware get authorization {
     return (Handler handler) {
       return (Request req) async {
         String? authorizationHeader = req.headers['Authorization'];
