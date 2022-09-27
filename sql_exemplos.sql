@@ -55,3 +55,5 @@ ORDER BY n.dt_autalizacao DESC;
 
 # busca todas as noticias limitando o resultado para 2 items.
 SELECT * FROM noticias limit 2;
+
+SELECT * FROM  usuarios WHERE email = 'Emerson';

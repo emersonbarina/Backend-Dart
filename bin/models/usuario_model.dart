@@ -34,6 +34,12 @@ factory UsuarioModel.fromMap(Map<String, dynamic> map) {
     );
   }
 
+  factory UsuarioModel.fromEmail(Map map) {
+    return UsuarioModel()
+      ..id = map['id']?.toInt()
+      ..password = map['password'];
+  }
+
   factory UsuarioModel.fromRequest(Map map) { // padrão Builder
     return UsuarioModel()
       ..name = map['name']
