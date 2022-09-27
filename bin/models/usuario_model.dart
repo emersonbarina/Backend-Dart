@@ -34,6 +34,13 @@ factory UsuarioModel.fromMap(Map<String, dynamic> map) {
     );
   }
 
+  factory UsuarioModel.fromRequest(Map map) { // padrão Builder
+    return UsuarioModel()
+      ..name = map['name']
+      ..email = map['email']
+      ..password = map['password']; 
+  }
+
 
   @override
   String toString() {
