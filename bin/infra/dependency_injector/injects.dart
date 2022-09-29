@@ -1,6 +1,7 @@
-import '../../apis/blog_api.dart';
+import '../../apis/noticias_api.dart';
 import '../../apis/login_api.dart';
 import '../../apis/usuario_api.dart';
+import '../../dao/noticia_dao.dart';
 import '../../dao/usuario_dao.dart';
 import '../../models/noticia_model.dart';
 import '../../services/generic_service.dart';
@@ -21,8 +22,9 @@ class Injects {
 
     di.register<SecurityService>(() => SecurityServiceImp());
 
-    di.register<GenericService<NoticiaModel>>(() => NoticiaService());
-    di.register<BlogApi>(() => BlogApi(di.get()));
+    di.register<NoticiaDAO>(() => NoticiaDAO(di.get<DBConfiguration>()));
+    di.register<NoticiaService>(() => NoticiaService(di.get<NoticiaDAO>()));
+    di.register<NoticiasApi>(() => NoticiasApi(di.get<GenericService<NoticiaModel>>()));
 
     //Camada que trata o banco de dados UsuarioDAO
     di.register<UsuarioDAO>(() => UsuarioDAO(di.get<DBConfiguration>()));

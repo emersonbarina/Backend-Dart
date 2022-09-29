@@ -1,67 +1,42 @@
-import 'dart:convert';
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class NoticiaModel {
 
-  final int id;
-  final String titulo;
-  final String descricao;
-  final String imagem;
-  final DateTime dtPublicacao;
-  final DateTime? dtAtualizacao;
+  int? id;
+  String? title;
+  String? description;
+  DateTime? dtCreated;
+  DateTime? dtUpdaded;
+  int? userId;
 
-  NoticiaModel(
-    this.id, 
-    this.titulo, 
-    this.descricao, 
-    this.imagem, 
-    this.dtPublicacao, 
-    this.dtAtualizacao
-  );
+  NoticiaModel();
 
-  @override
-  String toString() {
-    return 'NoticiaModel(id: $id, titulo: $titulo, descricao: $descricao, imagem: $imagem, dtPublicacao: $dtPublicacao, dtAtualizacao: $dtAtualizacao)';
+  factory NoticiaModel.fromMap(Map map) {
+    return NoticiaModel()
+      ..id = map['id']?.toInt()
+      ..title = map['titulo']
+      ..description = map['descricao'].toString()
+      ..dtCreated = map['dt_criacao']
+      ..dtUpdaded = map['dt_autalizacao']
+      ..userId = map['id_usuario']?.toInt();
   }
 
-  /*Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'titulo': titulo,
-      'descricao': descricao,
-      'imagem': imagem,
-      'dtPublicacao': dtPublicacao.millisecondsSinceEpoch,
-      'dtAtualizacao': dtAtualizacao?.millisecondsSinceEpoch,
-    };
-  }*/
+  factory NoticiaModel.fromRequest(Map map) {
+    return NoticiaModel()
+      ..title = map['title']
+      ..description = map['description']
+      ..userId = map['userId']?.toInt();
+  }
 
   Map toJson() {
     return {
-      
       'id': id,
-      'titulo': titulo,
-      'descricao': descricao,
-      'imagem': imagem,
-      'dtPublicacao': dtPublicacao.millisecondsSinceEpoch,
-      'dtAtualizacao': dtAtualizacao?.millisecondsSinceEpoch,
+      'title': title,
+      'Description': description
     };
-    
   }
 
-  //String toJson() => json.encode(toMap());
-
-  factory NoticiaModel.fromMap(Map<String, dynamic> map) {
-    return NoticiaModel(
-      (map['id'] ?? 0) as int,
-      (map['titulo'] ?? '') as String,
-      (map['descricao'] ?? '') as String,
-      (map['imagem'] ?? '') as String,
-      DateTime.fromMillisecondsSinceEpoch((map['dtPublicacao']??0) as int),
-      map['dtAtualizacao'] != null ? DateTime.fromMillisecondsSinceEpoch((map['dtAtualizacao']??0) as int) : null,
-    );
+  @override
+  String toString() {
+    return 'NoticiaModel(id: $id, title: $title, description: $description, dtCreated: $dtCreated, dtUpdaded: $dtUpdaded, userId: $userId)';
   }
-
-  
-
-  factory NoticiaModel.fromJson(String source) => NoticiaModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
