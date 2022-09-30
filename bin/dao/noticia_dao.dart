@@ -19,7 +19,7 @@ class NoticiaDAO implements DAO<NoticiaModel> {
   @override
   Future<NoticiaModel?> findOne(int id) async {
     var result = await _dbConfiguration.execQuery('SELECT * FROM noticias WHERE id = ?', [id]);
-    return result.affectedRows == 0
+    return result.isEmpty
         ? null 
         : NoticiaModel.fromMap(result.first.fields);
   }
