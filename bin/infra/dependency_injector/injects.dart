@@ -23,7 +23,7 @@ class Injects {
     di.register<SecurityService>(() => SecurityServiceImp());
 
     di.register<NoticiaDAO>(() => NoticiaDAO(di.get<DBConfiguration>()));
-    di.register<NoticiaService>(() => NoticiaService(di.get<NoticiaDAO>()));
+    di.register<GenericService<NoticiaModel>>(() => NoticiaService(di.get<NoticiaDAO>()));
     di.register<NoticiasApi>(() => NoticiasApi(di.get<GenericService<NoticiaModel>>()));
 
     //Camada que trata o banco de dados UsuarioDAO
