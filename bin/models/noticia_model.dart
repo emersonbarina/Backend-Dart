@@ -31,7 +31,7 @@ class NoticiaModel {
     return {
       'id': id,
       'title': title,
-      'Description': description
+      'description': description
     };
   }
 
